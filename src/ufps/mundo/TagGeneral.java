@@ -36,5 +36,10 @@ public class TagGeneral {
     public void setEtiquetas(Cola<EtiquetaHTML> etiquetas) {
         this.etiquetas = etiquetas;
     }
+    public Cola<EtiquetaHTML> getCola(){
     
+    return etiquetas;
+    
+    
+    }
 }

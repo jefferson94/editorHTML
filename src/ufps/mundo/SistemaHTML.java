@@ -9,27 +9,14 @@ import ufps.mundo.TagGeneral;
 public class SistemaHTML {
     
     private ListaCD<String> filasDelArchivo;
-    private Secuencia<TagGeneral> tags = new Secuencia<TagGeneral>(12);
+    private Secuencia<TagGeneral> tags;
     private Pila <ErrorHTML> errores;
     private Error error1;
     private  Error error2;
     private Error error3;
     private Error error4;
              
-   public SistemaHTML (){
-       
-        TagGeneral nuevo=new TagGeneral();
-        EtiquetaHTML nueva=new EtiquetaHTML();
-   
-       String link="http://sandbox1.ufps.edu.co/~madarme/estructuras/html_w3c.txt";
-       ArchivoLeerURL file = new ArchivoLeerURL(link);
-       Object v[]= file.leerArchivo();
-       Cola<String> cola = new Cola();
-       for(Object dato: v){
-       
-       String []dato2=dato.toString().split(";");
-       String datoaux = dato2[1];
-       /*
+    /*
         * deben con dato2(0) preguntar si esta en la secuencia , sino esta adicionarlo en el indice i, deben crear
         * otro indice, si ya esta , se saca .
         * 
@@ -39,87 +26,119 @@ public class SistemaHTML {
         * depsues
         * secuancia(i).getMisEtiquetas.enColar(new etiqueta con la info de datos2(1) datos(2)
         */
-       if( buscarDatoEnSecuencia(datoaux)){
+    
+    public SistemaHTML(){
+    
+    inicializar();
+    }
+    
+    
+    
+    //Constructor de archivos locales pasar a lista
+   public SistemaHTML ( String ruta){
+       
+        inicializar();
+        cargarEtiquetas();
+        ArchivoLeerTexto file=new ArchivoLeerTexto(ruta);
+          Object v[]=file.leerTodo();
+     
+       for(Object dato: v){
+       
+             
+             filasDelArchivo.addFin(dato.toString());
+        
+       
          
-         nueva.setEtiqueta( dato2[1]);
-         nueva.setDescripcion(dato2[2]);
-         nuevo.getEtiquetas().enColar(nueva);
-         
-      }
+       }
+   
+       
+       
+   }
+   
+   //Constructor desde url y pasar  a lista 
+   public SistemaHTML(String url, boolean x){
+       
+       
+       inicializar();
+       cargarEtiquetas();
+       String link="url";
+       ArchivoLeerURL file = new ArchivoLeerURL(url);
+       Object v[]= file.leerArchivo();
+      
+       for(Object dato: v){
+       
+      
+      filasDelArchivo.addFin(dato.toString());
+       
+       
+       
+       }
+   
+   
+   }
+       
+   
+   
+  private void cargarEtiquetas(){
+      
+      String link="http://sandbox1.ufps.edu.co/~madarme/estructuras/html_w3c.txt";
+       ArchivoLeerURL file = new ArchivoLeerURL(link);
+       Object v[]= file.leerArchivo();
+      Cola<String> cola = new Cola();
+      int cont =0;
+       for(Object dato: v){
+       
+       String []dato2=dato.toString().split(";");
+       int pos=buscarDatoEnSecuencia(dato2[0]);
+       
+       if(pos!=-1){
+           
+          if (dato2[1].equalsIgnoreCase("<h1> to <h6>")) {
+              for (int i = 0; i < 6; i++) {
+                  String msg="Basic;<h"+(i+1)+">;Defines an HTML document";
+                   this.tags.get(pos).getCola().enColar(new EtiquetaHTML(msg, dato2[2]));               
+              }
+           
+              this.tags.get(pos).getCola().enColar(new EtiquetaHTML(dato2[1], dato2[0]));
+          }
+      
       else{
-          String x = cola.deColar();
-          nuevo.getTipo();
-          nuevo = this.tags.get(j);
+           Cola<EtiquetaHTML> c=new Cola<EtiquetaHTML>();
+           c.enColar(new EtiquetaHTML(dato2[1], dato2[2]));
+           this.tags.set(cont, new TagGeneral(dato2[0], c ));
+          cont++;
          
       }
        }
+       }}
+   
+    
+   
+   private void inicializar(){
+       
+       this.error1=new Error("No tiene fin de etiqueta");
+       this.error2= new Error("No tiene etiqueta de inicio");
+       this.error3= new Error("Etiqueta no reconocida");
+       this.error4= new Error("No tiene etiqueta de estructura");
+       this.filasDelArchivo=new ListaCD<String>();
+       this.tags = new Secuencia<TagGeneral>(12);
+       this.errores= new Pila<ErrorHTML>();
+    
+             
    }
        
-//           if (datoaux.equalsIgnoreCase("<h1> to <h6>")) {
-//               for (int i = 0; i < 6; i++) {
-//                   String msg="Basic;<h"+(i+1)+">;Defines an HTML document";
-//                   cola.enColar(msg);
-//               }
-//           }else{
-//               cola.enColar(dato.toString());
-//           }
-//       }
-          public boolean buscarDatoEnSecuencia (String dato){
+        
+          public int buscarDatoEnSecuencia (String dato){
           
            for(int i=0; i<this.tags.length(); i++){
                    TagGeneral aux= this.tags.get(i);
                if (dato.equalsIgnoreCase(aux.getTipo())){
-                   return true;
+                   return (i);
 //                  EtiquetaHTML nueva = new EtiquetaHTML
                }
            }
-           return false;
+           return -1;
        
 }
 }
 
-//       int i = 0;
-//       String x = cola.deColar();
-//       String [] fila = x.split(";");
-//           String tipo = fila[0];
-//           TagGeneral aux = this.tags.get(i);
-//           aux.setTipo(tipo);
-//           EtiquetaHTML etiqueta = new EtiquetaHTML();
-//           etiqueta.setEtiqueta(fila[1]);
-//           etiqueta.setDescripcion(fila[2]);
-//           aux.getEtiquetas().enColar(etiqueta);
-//           
-//       while(!cola.esVacio()){
-//           
-//            x = cola.deColar();
-//       fila = x.split(";");
-//            tipo = fila[0];
-//           boolean sw =true;
-//            while(sw){
-//            if(tipo.equalsIgnoreCase(aux.getTipo())){
-//            
-//             aux = this.tags.get(i);
-//           aux.setTipo(tipo);
-//            etiqueta = new EtiquetaHTML();
-//           etiqueta.setEtiqueta(fila[1]);
-//           etiqueta.setDescripcion(fila[2]);
-//           aux.getEtiquetas().enColar(etiqueta);
-//           break;
-//            }
-//            else{
-//                i++;
-//                
-//                 aux = this.tags.get(i);
-//           aux.setTipo(tipo);
-//            etiqueta = new EtiquetaHTML();
-//           etiqueta.setEtiqueta(fila[1]);
-//           etiqueta.setDescripcion(fila[2]);
-//           aux.getEtiquetas().enColar(etiqueta);
-//           sw=false;
-//            }
-//            }
-//       }
-//       
-//   }
-//    
-//}

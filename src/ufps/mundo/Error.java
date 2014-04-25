@@ -12,4 +12,13 @@ public class Error {
     
     private String descripcion;
     
+    
+    public Error (){
+    
+}
+    
+    public Error (String msg){
+        this.descripcion=msg;
+        
+    }
 }
