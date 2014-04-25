@@ -17,6 +17,9 @@ public class SistemaHTML {
     private Error error4;
              
    public SistemaHTML (){
+       
+        TagGeneral nuevo=new TagGeneral();
+        EtiquetaHTML nueva=new EtiquetaHTML();
    
        String link="http://sandbox1.ufps.edu.co/~madarme/estructuras/html_w3c.txt";
        ArchivoLeerURL file = new ArchivoLeerURL(link);
@@ -36,59 +39,87 @@ public class SistemaHTML {
         * depsues
         * secuancia(i).getMisEtiquetas.enColar(new etiqueta con la info de datos2(1) datos(2)
         */
-       
-       
-           if (datoaux.equalsIgnoreCase("<h1> to <h6>")) {
-               for (int i = 0; i < 6; i++) {
-                   String msg="Basic;<h"+(i+1)+">;Defines an HTML document";
-                   cola.enColar(msg);
-               }
-           }else{
-               cola.enColar(dato.toString());
-           }
+       if( buscarDatoEnSecuencia(datoaux)){
+         
+         nueva.setEtiqueta( dato2[1]);
+         nueva.setDescripcion(dato2[2]);
+         nuevo.getEtiquetas().enColar(nueva);
+         
+      }
+      else{
+          String x = cola.deColar();
+          nuevo.getTipo();
+          nuevo = this.tags.get(j);
+         
+      }
        }
-       int i = 0;
-       String x = cola.deColar();
-       String [] fila = x.split(";");
-           String tipo = fila[0];
-           TagGeneral aux = this.tags.get(i);
-           aux.setTipo(tipo);
-           EtiquetaHTML etiqueta = new EtiquetaHTML();
-           etiqueta.setEtiqueta(fila[1]);
-           etiqueta.setDescripcion(fila[2]);
-           aux.getEtiquetas().enColar(etiqueta);
-           
-       while(!cola.esVacio()){
-           
-            x = cola.deColar();
-       fila = x.split(";");
-            tipo = fila[0];
-           boolean sw =true;
-            while(sw){
-            if(tipo.equalsIgnoreCase(aux.getTipo())){
-            
-             aux = this.tags.get(i);
-           aux.setTipo(tipo);
-            etiqueta = new EtiquetaHTML();
-           etiqueta.setEtiqueta(fila[1]);
-           etiqueta.setDescripcion(fila[2]);
-           aux.getEtiquetas().enColar(etiqueta);
-           break;
-            }
-            else{
-                i++;
-                
-                 aux = this.tags.get(i);
-           aux.setTipo(tipo);
-            etiqueta = new EtiquetaHTML();
-           etiqueta.setEtiqueta(fila[1]);
-           etiqueta.setDescripcion(fila[2]);
-           aux.getEtiquetas().enColar(etiqueta);
-           sw=false;
-            }
-            }
-       }
-       
    }
-    
+       
+//           if (datoaux.equalsIgnoreCase("<h1> to <h6>")) {
+//               for (int i = 0; i < 6; i++) {
+//                   String msg="Basic;<h"+(i+1)+">;Defines an HTML document";
+//                   cola.enColar(msg);
+//               }
+//           }else{
+//               cola.enColar(dato.toString());
+//           }
+//       }
+          public boolean buscarDatoEnSecuencia (String dato){
+          
+           for(int i=0; i<this.tags.length(); i++){
+                   TagGeneral aux= this.tags.get(i);
+               if (dato.equalsIgnoreCase(aux.getTipo())){
+                   return true;
+//                  EtiquetaHTML nueva = new EtiquetaHTML
+               }
+           }
+           return false;
+       
 }
+}
+
+//       int i = 0;
+//       String x = cola.deColar();
+//       String [] fila = x.split(";");
+//           String tipo = fila[0];
+//           TagGeneral aux = this.tags.get(i);
+//           aux.setTipo(tipo);
+//           EtiquetaHTML etiqueta = new EtiquetaHTML();
+//           etiqueta.setEtiqueta(fila[1]);
+//           etiqueta.setDescripcion(fila[2]);
+//           aux.getEtiquetas().enColar(etiqueta);
+//           
+//       while(!cola.esVacio()){
+//           
+//            x = cola.deColar();
+//       fila = x.split(";");
+//            tipo = fila[0];
+//           boolean sw =true;
+//            while(sw){
+//            if(tipo.equalsIgnoreCase(aux.getTipo())){
+//            
+//             aux = this.tags.get(i);
+//           aux.setTipo(tipo);
+//            etiqueta = new EtiquetaHTML();
+//           etiqueta.setEtiqueta(fila[1]);
+//           etiqueta.setDescripcion(fila[2]);
+//           aux.getEtiquetas().enColar(etiqueta);
+//           break;
+//            }
+//            else{
+//                i++;
+//                
+//                 aux = this.tags.get(i);
+//           aux.setTipo(tipo);
+//            etiqueta = new EtiquetaHTML();
+//           etiqueta.setEtiqueta(fila[1]);
+//           etiqueta.setDescripcion(fila[2]);
+//           aux.getEtiquetas().enColar(etiqueta);
+//           sw=false;
+//            }
+//            }
+//       }
+//       
+//   }
+//    
+//}
