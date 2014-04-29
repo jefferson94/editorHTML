@@ -35,7 +35,7 @@ public class SistemaHTML {
     
     
     //Constructor de archivos locales pasar a lista
-   public SistemaHTML ( String ruta){
+   public SistemaHTML (String ruta){
        
         inicializar();
         cargarEtiquetas();
@@ -140,5 +140,52 @@ public class SistemaHTML {
            return -1;
        
 }
+          
+     public String[] ayudaHTML(String etiqueta){
+     cargarEtiquetas();
+     String vector[] = new String [3];
+      
+     for (int i = 0 ; i<this.tags.length();i++){
+     
+    Cola<EtiquetaHTML> x=  this.tags.get(i).getCola();
+     
+    String v[] = buscarEtiqueta(x,etiqueta);
+    
+    if ( v!=null){
+        
+        vector[0]=v[0];
+        vector[1]=this.tags.get(i).getTipo();
+        vector[2]=v[1];
+   
+    }
+     
+     return vector;
+     }
+   vector[0]= "No se encuentra la etiqueta";
+     return vector;
+   
+     }     
+
+    private  String[] buscarEtiqueta(Cola<EtiquetaHTML> x, String etiqueta) {
+        
+       
+        String v1[]=new String[2];
+        String msg ="";
+        while(!x.esVacio()){
+        
+        EtiquetaHTML d= x.deColar();
+        etiqueta="<"+etiqueta+">";
+        if( etiqueta.equals(d.getEtiqueta()));
+        v1[0]= etiqueta;
+        v1[1]=d.getDescripcion();
+        
+        return v1;
+        }
+        
+        return null;
+        
+        
+    }
+          
 }
 

@@ -328,4 +328,75 @@ public class ListaCD<T> implements Iterable<T>
         {
             return (this.indexOf(info)!=-1);
         }
+   
+       public void ordenarSeleccion() {
+
+        NodoD<T> menor;
+        NodoD<T> w;
+        NodoD<T> z, aux = null;;
+        int cont = -1;
+
+        for (NodoD<T> x = this.cab.getSig(); x != this.cab; x = x.getSig()) {
+               
+            
+            cont++;
+            
+            for (NodoD<T> y = x.getSig(); y != this.cab; y = y.getSig()) {
+
+                
+                if (x.getInfo().compareTo(y.getInfo()) < 0) {
+
+                    menor = y;
+
+                    if (y.getInfo().compareTo(menor.getInfo()) < 0) {
+
+                        menor = y;
+
+                    }
+
+                    menor = menor;
+                }
+
+                menor = x;
+
+            }
+
+            w = menor.getSig();
+            z = menor.getAnt();
+
+            if (cont == 0) {
+
+                this.cab.setSig(menor);
+
+                menor.setSig(x);
+                menor.setAnt(cab);
+                x.setAnt(menor);
+
+                aux = x.getAnt();
+
+
+            } else {
+
+                aux.setSig(menor);
+                menor.setAnt(aux);
+                menor.setSig(x);
+                x.setAnt(menor);
+                aux = aux.getSig();
+
+            }
+            z.setSig(w);
+            w.setAnt(z);
+
+        }
+
+
+
+        
+        
+        
+        
+        
+        
+        
+        }
 }//fin class

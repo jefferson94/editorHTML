@@ -4,6 +4,10 @@
  */
 package ufps.gui;
 
+import java.io.IOException;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author FERNEY JARAMILLO
@@ -15,6 +19,7 @@ public class Form1 extends javax.swing.JFrame {
      */
     public Form1() {
         initComponents();
+        setLocationRelativeTo(this);
     }
 
     /**
@@ -27,6 +32,7 @@ public class Form1 extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel2 = new javax.swing.JPanel();
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -56,13 +62,26 @@ public class Form1 extends javax.swing.JFrame {
 
         jLabel3.setText("Seleccione el lugar donde se encuentra el archivo (URL O DESKOPT) o puede crear un archivo Nuevo.");
 
+        buttonGroup1.add(jRadioButtonURL);
         jRadioButtonURL.setText("URL ");
 
+        buttonGroup1.add(jRadioButtonLocal);
         jRadioButtonLocal.setText("Archivo Local");
+        jRadioButtonLocal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonLocalActionPerformed(evt);
+            }
+        });
 
+        buttonGroup1.add(jRadioButtonNuevo);
         jRadioButtonNuevo.setText("CREAR NUEVO");
 
         jButtonAceptar.setText("ACEPTAR");
+        jButtonAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAceptarActionPerformed(evt);
+            }
+        });
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/ufps/fondoescritorioForm3.jpg"))); // NOI18N
 
@@ -126,11 +145,55 @@ public class Form1 extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButtonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceptarActionPerformed
+        // TODO add your handling code here:
+        
+        if(this.jRadioButtonLocal.isSelected()){
+            JFileChooser x = new JFileChooser();
+            x.showOpenDialog(this);
+        }
+        else if(this.jRadioButtonURL.isSelected()){
+            FormdigitarURL k ;
+        
+         k = new FormdigitarURL();
+        k.setVisible(true);
+       this.setVisible(false);
+        }
+        else if(this.jRadioButtonNuevo.isSelected()){
+        try{ 
+        Runtime BlockNotas=Runtime.getRuntime();
+        Process proceso=BlockNotas.exec("notepad");
+        proceso.waitFor();
+        
+        
+        
+        }
+        catch (IOException ioe){
+            ioe.printStackTrace();
+        }
+         catch (InterruptedException ie){
+            ie.printStackTrace();
+        }
+        }
+        
+        
+      else{   
+    JOptionPane.showMessageDialog(null, "Seleccione algun campo");
+            
+        }
+
+    }//GEN-LAST:event_jButtonAceptarActionPerformed
+
+    private void jRadioButtonLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonLocalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jRadioButtonLocalActionPerformed
+
     /**
      * @param args the command line arguments
      */
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButtonAceptar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
