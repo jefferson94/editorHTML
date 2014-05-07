@@ -42,4 +42,25 @@ public class TagGeneral {
     
     
     }
+    
+    public String[] buscarEtiqueta( String m) 
+    {
+  
+        String v1[]=new String[2];
+        String msg ="";
+        while(!this.etiquetas.esVacio()){
+        
+        EtiquetaHTML d= this.etiquetas.deColar();
+        m="<"+m+">";
+        if( m.equals(d.getEtiqueta()));
+        v1[0]= m;
+        v1[1]=d.getDescripcion();
+        
+        return v1;
+        }
+        
+        return null;
+    
+    }
+    
 }

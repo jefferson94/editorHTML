@@ -337,14 +337,13 @@ public class ListaCD<T> implements Iterable<T>
         int cont = -1;
 
         for (NodoD<T> x = this.cab.getSig(); x != this.cab; x = x.getSig()) {
-               
-            
+        
             cont++;
             
             for (NodoD<T> y = x.getSig(); y != this.cab; y = y.getSig()) {
 
                 
-                if (x.getInfo().compareTo(y.getInfo()) < 0) {
+                if ((Comparable)(x.getInfo().compareTo(y.getInfo()) < 0) {
 
                     menor = y;
 
@@ -389,14 +388,5 @@ public class ListaCD<T> implements Iterable<T>
 
         }
 
-
-
-        
-        
-        
-        
-        
-        
-        
         }
 }//fin class

@@ -8,6 +8,7 @@ import java.io.IOException;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
+
 /**
  *
  * @author FERNEY JARAMILLO
@@ -75,6 +76,11 @@ public class Form1 extends javax.swing.JFrame {
 
         buttonGroup1.add(jRadioButtonNuevo);
         jRadioButtonNuevo.setText("CREAR NUEVO");
+        jRadioButtonNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonNuevoActionPerformed(evt);
+            }
+        });
 
         jButtonAceptar.setText("ACEPTAR");
         jButtonAceptar.addActionListener(new java.awt.event.ActionListener() {
@@ -160,33 +166,40 @@ public class Form1 extends javax.swing.JFrame {
        this.setVisible(false);
         }
         else if(this.jRadioButtonNuevo.isSelected()){
+            
+            
+            
+            
+            
         try{ 
         Runtime BlockNotas=Runtime.getRuntime();
-        Process proceso=BlockNotas.exec("notepad");
-        proceso.waitFor();
-        
-        
+      Process proceso=BlockNotas.exec("notepad");
+       proceso.waitFor();
         
         }
-        catch (IOException ioe){
+       catch (IOException ioe){
             ioe.printStackTrace();
-        }
-         catch (InterruptedException ie){
-            ie.printStackTrace();
-        }
+      }
+        catch (InterruptedException ie){
+           ie.printStackTrace();
+       }
         }
         
         
       else{   
-    JOptionPane.showMessageDialog(null, "Seleccione algun campo");
+   JOptionPane.showMessageDialog(null, "Seleccione algun campo");
             
-        }
+      
 
     }//GEN-LAST:event_jButtonAceptarActionPerformed
-
+    }
     private void jRadioButtonLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonLocalActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jRadioButtonLocalActionPerformed
+
+    private void jRadioButtonNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonNuevoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jRadioButtonNuevoActionPerformed
 
     /**
      * @param args the command line arguments

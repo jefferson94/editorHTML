@@ -156,6 +156,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="CREAR NUEVO"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRadioButtonNuevoActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButtonAceptar">
           <Properties>
