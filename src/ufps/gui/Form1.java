@@ -167,24 +167,26 @@ public class Form1 extends javax.swing.JFrame {
         }
         else if(this.jRadioButtonNuevo.isSelected()){
             
+           FormNuevo k;
+           k= new FormNuevo();
+           k.setVisible(true);
             
             
             
-            
-        try{ 
-        Runtime BlockNotas=Runtime.getRuntime();
-      Process proceso=BlockNotas.exec("notepad");
-       proceso.waitFor();
-        
+//        try{ 
+//        Runtime BlockNotas=Runtime.getRuntime();
+//      Process proceso=BlockNotas.exec("notepad");
+//       proceso.waitFor();
+//        
+//        }
+//       catch (IOException ioe){
+//            ioe.printStackTrace();
+//      }
+//        catch (InterruptedException ie){
+//           ie.printStackTrace();
+//       }
+//        }
         }
-       catch (IOException ioe){
-            ioe.printStackTrace();
-      }
-        catch (InterruptedException ie){
-           ie.printStackTrace();
-       }
-        }
-        
         
       else{   
    JOptionPane.showMessageDialog(null, "Seleccione algun campo");

@@ -3,7 +3,9 @@
  * and open the template in the editor.
  */
 package ufps.gui;
-
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
+import ufps.mundo.SistemaHTML;
+import ufps.util.*;
 /**
  *
  * @author FERNEY JARAMILLO
@@ -28,6 +30,17 @@ public class prueba {
 //        System.out.println(otro);
 //        
 //    }
+        
+    SistemaHTML d;
+        d = new SistemaHTML("C:/Users/FERNEY JARAMILLO/Desktop");
+    Cola<String> g= new Cola<String>();
     
+    g.enColar("<html>");
+    g.enColar("</html>");
+    
+    d.analizadorHTML();
+    d.separar();
+    
+    System.out.println(d);
 }
 }

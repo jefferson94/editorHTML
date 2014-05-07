@@ -164,7 +164,7 @@ public class SistemaHTML {
 
     }
 
-    private Secuencia<Cola<String>> separar() {
+    public Secuencia<Cola<String>> separar() {
 
         Cola<String> binaria = new Cola<String>();
         Cola<String> unaria = new Cola<String>();
@@ -231,7 +231,7 @@ public class SistemaHTML {
     }
     }
 
-    private void isCorrect(Cola<String> a) {
+    public void isCorrect(Cola<String> a) {
 
 //        Pila<String> original = new Pila<String>();
         Pila<String> aux = new Pila<String>();
