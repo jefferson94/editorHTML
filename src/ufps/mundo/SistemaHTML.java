@@ -7,6 +7,10 @@ import ufps.mundo.TagGeneral;
  * @author FERNEY JARAMILLO
  * @author VALERIA SALAZAR
  */
+/**
+ * 
+ * Inicio clase SistemaHTML
+ */
 public class SistemaHTML {
 
     private ListaCD<String> filasDelArchivo;
@@ -27,12 +31,19 @@ public class SistemaHTML {
      * depsues
      * secuancia(i).getMisEtiquetas.enColar(new etiqueta con la info de datos2(1) datos(2)
      */
+    /**
+     * Constructor vacío de la clase SistemaHtml
+     */
     public SistemaHTML() {
 
         inicializar();
     }
 
     //Constructor de archivos locales  para pasar a lista
+    /**
+     * Constructor con parametro de la clase
+     * @param ruta recibe como parámetro la ruta del archivo local
+     */
     public SistemaHTML(String ruta) {
 
         inicializar();
@@ -49,6 +60,11 @@ public class SistemaHTML {
     }
 
     //Constructor desde url y pasar  a lista 
+    /**
+     * Constructor con parámetros de la clase
+     * @param url dirección leer el archivo u
+     * @param x parámetro para diferenciar del Constructor con ruta
+     */
     public SistemaHTML(String url, boolean x) {
 
         inicializar();
@@ -64,7 +80,13 @@ public class SistemaHTML {
         }
 
     }
+    
+    /**
+     * Método que lee las etiquetas html según la W3C.
 
+     * @param etiqueta variable a buscar.
+     * @return un vector de String de 3 posiciones, en la [0] error, [1] el tipo, [2] etiqueta.
+     */
     public String[] ayudaHTML(String etiqueta) {
 
 
@@ -92,7 +114,10 @@ public class SistemaHTML {
         return vector;
 
     }
-
+    
+    /**
+     * Método que nos permite inicializar las diferentes estructuras a utilizar en los constructores.
+     */
     private void inicializar() {
 
         this.error1 = new Error("No tiene fin de etiqueta");
@@ -104,7 +129,9 @@ public class SistemaHTML {
         this.errores = new Pila<ErrorHTML>();
 
     }
-
+    /**
+     *Método que realiza la carga de las etiquetas.
+     */
     private void cargarEtiquetas() {
 
         String link = "http://sandbox1.ufps.edu.co/~madarme/estructuras/html_w3c.txt";
@@ -139,6 +166,11 @@ public class SistemaHTML {
         }
     }
 
+    /**
+     * 
+     * @param dato
+     * @return 
+     */
     public int buscarDatoEnSecuencia(String dato) {
 
         for (int i = 0; i < this.tags.length(); i++) {
@@ -164,14 +196,19 @@ public class SistemaHTML {
 
     }
 
-    public Secuencia<Cola<String>> separar() {
+    /**
+     * Método que me separa la Lista filasArchivo en dos colas, una cola para etiquetas binarias, y la otra cola para etiquentas unarias.
+     * @return una Secuencia de Cola tipo String, en la posición 0 guardará la Cola de unarias y en la posición 1 la Cola de binarias.
+     */
+    private Secuencia<Cola<String>> separar() {
 
         Cola<String> binaria = new Cola<String>();
         Cola<String> unaria = new Cola<String>();
         for (String d : this.filasDelArchivo) {
             int i = 0;
             String datos[] = d.split(">");
-       //for que recorra datos
+            for (;i<datos.length; i++){
+       
             datos[i] = datos[i] + ">";
             String palabra = datos[i];
             int j = palabra.lastIndexOf("<");
@@ -198,8 +235,9 @@ public class SistemaHTML {
                     this.errores.push(a);
                 }
             }
-            i++;
-            //se cierra el for
+            }
+           
+            
         }
         Secuencia<Cola<String>> nueva = new Secuencia<Cola<String>>(2);
         nueva.set(0, unaria);
@@ -207,6 +245,11 @@ public class SistemaHTML {
         return nueva;
     }
 
+    /**
+     * Método que me indica si la etiqueta es unaria o binaria
+     * @param original etiqueta leida de la Lista de filasArchivo, y que será evaluada para saber a que caso pertenece.
+     * @return un valor entero: 4 si es un error, 1 si es unaria, 0 si es binaria.
+     */
     private int isUnaria(String original) {
 
         if (original.equals("<html/>") || original.equals("<title/>") || original.equals("<boddy/>") || original.equals("<head/>") || original.equals("<!Doctype HTML>")) {
@@ -219,19 +262,22 @@ public class SistemaHTML {
             if (p[p.length - 1] == '/') {
                 original.charAt(original.length() - 1);
                 return 1; //es unaria
+                
 //            } else if (original.equals("<html>") || original.equals("<title>") || original.equals("<body>") || original.equals("<head>") || original.equals("<!Doctype HTML>") || original.equals("</html>") || original.equals("</title>") || original.equals("</body>") || original.equals("</head>")) {
 //                return -1;
 //
 //            }
-
-
-
+ 
         }
         return 0; //es binaria
     }
     }
 
-    public void isCorrect(Cola<String> a) {
+    /**
+     * Método que me evalua si las etiquetas estan equilibradas por parejas de apertura y cierre.
+     * @param a Cola de String que contiene las etiquetas binarias o etiquetas unarias.
+     */
+    private void isCorrect(Cola<String> a) {
 
 //        Pila<String> original = new Pila<String>();
         Pila<String> aux = new Pila<String>();
@@ -286,23 +332,27 @@ public class SistemaHTML {
         }
 
     }
-
+    
+    /**
+     * Método que permite a una etiqueta de apertura crearle su etiqueta de cierre para luego compararla en el metodo de isCorrect.
+     * @param x etiqueta a crearle su inversa
+     * @return un String "0" si la etiqueta recibida como parametro ya es la inversa, y en caso contrario retornara la etiqueta inversa.
+     */
     private String getInverso(String x) {
-        
+
         char t[] = x.toCharArray();
-       
-if (t[1]=='/'){
 
-    return "o";
+        if (t[1] == '/') {
+
+            return "o";
 
 
-}
-else{
-        String a = x.substring(1);
-        System.out.println(a);
-        a = "</" + a;
-        return a;
+        } else {
+            String a = x.substring(1);
+            System.out.println(a);
+            a = "</" + a;
+            return a;
 
-}
+        }
     }
 }
