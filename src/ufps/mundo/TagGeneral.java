@@ -68,16 +68,8 @@ public class TagGeneral {
         this.etiquetas = etiquetas;
     }
     
-//    /**
-//     * 
-//     * @return 
-//     */
-//    public Cola<EtiquetaHTML> getCola(){
-//    
-//    return etiquetas;
-//    
-//    
-//    }
+  
+   
     
     /**
      * Método que realiza la busqueda de una etiqueta especifica

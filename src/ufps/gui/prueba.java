@@ -3,44 +3,32 @@
  * and open the template in the editor.
  */
 package ufps.gui;
+
+import javax.swing.JOptionPane;
 import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
+import ufps.mundo.EtiquetaHTML;
 import ufps.mundo.SistemaHTML;
+import ufps.mundo.TagGeneral;
 import ufps.util.*;
+
 /**
  *
  * @author FERNEY JARAMILLO
  */
 public class prueba {
+
+    public static void main(String[] args) {
+     SistemaHTML h=new SistemaHTML();
+     Secuencia<TagGeneral> s=h.getTags();
     
-    public static void main(String [] args){
-        String x="<html>";
-//        String a =x.substring(1);
-//        System.out.println(a);
-//        a="</"+a;
-//          System.out.println(a);
-        int i=x.lastIndexOf("/");
-        System.out.println(i);
-//        String otro="";
-//        for (;  i< x.length(); i++) {
-//            otro+=x.charAt(i);
-//            
-//           
-//        }
-//        otro="</"+otro;
-//        System.out.println(otro);
-//        
-//    }
-        
-    SistemaHTML d;
-        d = new SistemaHTML("C:/Users/FERNEY JARAMILLO/Desktop");
-    Cola<String> g= new Cola<String>();
-    
-    g.enColar("<html>");
-    g.enColar("</html>");
-    
-    d.analizadorHTML();
-    d.separar();
-    
-    System.out.println(d);
-}
+     for(int i=0;i<s.length();i++){
+        if(s.get(i)!=null){ 
+         Cola<EtiquetaHTML> c=s.get(i).getEtiquetas();
+            System.out.println("este es el tipo:  "+ s.get(i).getTipo());
+         while(!c.esVacio()){
+             System.out.println(c.deColar().getEtiqueta());
+         }
+        }
+     }
+    }
 }

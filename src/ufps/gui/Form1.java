@@ -4,10 +4,11 @@
  */
 package ufps.gui;
 
+import java.io.File;
 import java.io.IOException;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-
+import ufps.mundo.SistemaHTML;
 
 /**
  *
@@ -15,14 +16,26 @@ import javax.swing.JOptionPane;
  */
 public class Form1 extends javax.swing.JFrame {
 
+    private SistemaHTML mySistema;
+
     /**
      * Creates new form Form1
      */
     public Form1() {
         initComponents();
         setLocationRelativeTo(this);
+
     }
 
+    public SistemaHTML getMySistema() {
+        return mySistema;
+    }
+
+    public void setMySistema(SistemaHTML mySistema) {
+        this.mySistema = mySistema;
+    }
+
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -153,26 +166,33 @@ public class Form1 extends javax.swing.JFrame {
 
     private void jButtonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceptarActionPerformed
         // TODO add your handling code here:
-        
-        if(this.jRadioButtonLocal.isSelected()){
+
+        if (this.jRadioButtonLocal.isSelected()) {
             JFileChooser x = new JFileChooser();
             x.showOpenDialog(this);
-        }
-        else if(this.jRadioButtonURL.isSelected()){
-            FormdigitarURL k ;
-        
-         k = new FormdigitarURL();
-        k.setVisible(true);
-       this.setVisible(false);
-        }
-        else if(this.jRadioButtonNuevo.isSelected()){
+            int seleccion = x.showSaveDialog(x);
+            String ruta="";
+            if(seleccion == x.APPROVE_OPTION){
+                File fichero = x.getSelectedFile();
+                ruta = fichero.getAbsolutePath();
+            }
             
-           FormNuevo k;
-           k= new FormNuevo();
-           k.setVisible(true);
-            
-            
-            
+            mySistema = new SistemaHTML(ruta);
+        } else if (this.jRadioButtonURL.isSelected()) {
+            FormdigitarURL k;
+
+            k = new FormdigitarURL(this);
+            k.setVisible(true);
+            this.setVisible(false);
+        } else if (this.jRadioButtonNuevo.isSelected()) {
+
+            FormEditorHTML k;
+            this.mySistema=new SistemaHTML();
+            k = new FormEditorHTML(this);
+            k.setVisible(true);
+
+
+
 //        try{ 
 //        Runtime BlockNotas=Runtime.getRuntime();
 //      Process proceso=BlockNotas.exec("notepad");
@@ -186,12 +206,10 @@ public class Form1 extends javax.swing.JFrame {
 //           ie.printStackTrace();
 //       }
 //        }
-        }
-        
-      else{   
-   JOptionPane.showMessageDialog(null, "Seleccione algun campo");
-            
-      
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleccione algun campo");
+
+
 
     }//GEN-LAST:event_jButtonAceptarActionPerformed
     }
@@ -202,11 +220,9 @@ public class Form1 extends javax.swing.JFrame {
     private void jRadioButtonNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonNuevoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jRadioButtonNuevoActionPerformed
-
     /**
      * @param args the command line arguments
      */
-   
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButtonAceptar;

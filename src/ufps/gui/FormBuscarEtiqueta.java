@@ -179,8 +179,8 @@ public class FormBuscarEtiqueta extends javax.swing.JFrame {
 
     private void jButton1RegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1RegresarActionPerformed
         // TODO add your handling code here:
-        FormEditorHTML k;
-        k = new FormEditorHTML();
+        FormValidadorHTML k;
+        k = new FormValidadorHTML();
         k.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1RegresarActionPerformed

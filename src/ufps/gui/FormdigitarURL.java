@@ -4,20 +4,25 @@
  */
 package ufps.gui;
 
+import javax.swing.JOptionPane;
+import ufps.mundo.SistemaHTML;
+
 /**
  *
  * @author FERNEY JARAMILLO
  */
 public class FormdigitarURL extends javax.swing.JFrame {
-
+    private Form1 myForm;
     /**
      * Creates new form FormdigitarURL
      */
-    public FormdigitarURL() {
+    public FormdigitarURL(Form1 f) {
         initComponents();
         setLocationRelativeTo(this);
+        this.myForm=f;
     }
 
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -112,6 +117,15 @@ public class FormdigitarURL extends javax.swing.JFrame {
 
     private void jButtonCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCargarActionPerformed
         // TODO add your handling code here:
+        String url = jTextField1URL.getText();
+        if (!url.isEmpty()){
+        myForm.setMySistema(new SistemaHTML(url,true));
+       
+        }
+        
+        else{
+        JOptionPane.showMessageDialog(rootPane, "digite URL");
+        }
     }//GEN-LAST:event_jButtonCargarActionPerformed
 
     /**
