@@ -354,14 +354,25 @@ public class SistemaHTML {
         }
         
         else {
-
+            EtiquetaHTML eti;
+            ErrorHTML nuevo;
             while (!posibleError.esVacio()) {
                 String etiqueta = posibleError.pop();
-                EtiquetaHTML eti = new EtiquetaHTML(etiqueta, "");
-                ErrorHTML nuevo = new ErrorHTML(error4, eti);
+                 eti = new EtiquetaHTML(etiqueta, "");
+               
+               if( casoEtiqueta(etiqueta)){
+               nuevo = new ErrorHTML(error1, eti);
+                
                 errores.push(nuevo);
+               }
+                else  {
+                   nuevo = new ErrorHTML(error2, eti);
+                   errores.push(nuevo);
+               }
+               
+                    
+                
             }
-
 
         }
         return errores;
