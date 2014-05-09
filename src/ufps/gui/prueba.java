@@ -18,17 +18,48 @@ import ufps.util.*;
 public class prueba {
 
     public static void main(String[] args) {
+//        String x="<h>";
+//        String a = x.substring(1);
+//            System.out.println(a);
+//            a = "</" + a;
+//            System.out.println(a);
+    
      SistemaHTML h=new SistemaHTML();
      Secuencia<TagGeneral> s=h.getTags();
+    Cola<String> d=new Cola<String>();
+//     for(int i=0;i<s.length();i++){
+//        if(s.get(i)!=null){ 
+//         Cola<EtiquetaHTML> c=s.get(i).getEtiquetas();
+//         
+//            System.out.println("este es el tipo:  "+ s.get(i).getTipo());
+//         while(!c.esVacio()){
+//             EtiquetaHTML q=c.deColar();
+//             System.out.println(q.getEtiqueta());
+//             d.enColar(q.getEtiqueta());
+//         }
+//         
+//           Pila<String> errores=h.isCorrect(d);
+//           while(!errores.esVacio()){
+//               System.out.println(errores.pop());
+//           }
+//         
+//         
+//        }
+//     }
     
-     for(int i=0;i<s.length();i++){
-        if(s.get(i)!=null){ 
-         Cola<EtiquetaHTML> c=s.get(i).getEtiquetas();
-            System.out.println("este es el tipo:  "+ s.get(i).getTipo());
-         while(!c.esVacio()){
-             System.out.println(c.deColar().getEtiqueta());
-         }
-        }
-     }
+    d.enColar("<html>");
+    d.enColar("<dp>");
+    d.enColar("<dp>");
+    d.enColar("</dp>");
+    d.enColar("</html>");
+    d.enColar(null);
+    
+    Pila<String> errores=h.isCorrect(d);
+             while(!errores.esVacio()){
+               System.out.println(errores.pop());
+           }
+  
+    
+    
     }
 }

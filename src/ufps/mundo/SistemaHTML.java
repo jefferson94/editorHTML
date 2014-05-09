@@ -1,5 +1,6 @@
-package ufps.mundo;
+  package ufps.mundo;
 
+import javax.print.DocFlavor;
 import ufps.util.*;
 import ufps.mundo.TagGeneral;
 
@@ -305,60 +306,49 @@ public class SistemaHTML {
      * @param a Cola de String que contiene las etiquetas binarias o etiquetas
      * unarias.
      */
-    private void isCorrect(Cola<String> a) {
+    public Pila<String> isCorrect(Cola<String> a) {
 
-//        Pila<String> original = new Pila<String>();
-        Pila<String> aux = new Pila<String>();
-
+     Pila<String> etiquetaApertura = new Pila<String>();
+        Pila<String> posibleError = new Pila<String>();
+        String dato;
         while (!a.esVacio()) {
-
-            String aux1 = "";
-            String aux2 = "";
-
-            if (aux.esVacio()) {
-
-                aux1 = a.deColar();
-                aux2 = a.deColar();
-
-            } else {
-                aux1 = a.deColar();
-                if (aux2 == "") {
-                    aux2 = aux.pop();
+            dato=a.deColar();
+            if (casoEtiqueta(dato)){
+                etiquetaApertura.push(dato);
+            
+            }
+        
+            else{
+                while(!etiquetaApertura.esVacio()){
+//                String dato2= etiquetaApertura.pop();
+                String dato3=etiquetaApertura.pop();
+                String inverso=getInverso(dato3);
+                if(!(inverso.equalsIgnoreCase(dato))){
+                    posibleError.push(dato3);
+                    
+            }
                 }
-//                String m = original.pop();
-//                String c = aux.pop();
-//                String i = m;
-//
-//                String h = getInverso(i);
-//
-//                if (!c.equals(h)) {
-//                    aux.push(c);
-//                    String aux2 = m;
+                
+                if (etiquetaApertura.esVacio()&& !(posibleError.esVacio())){
+                    while(!posibleError.esVacio()){
+                    String etiqueta=posibleError.pop();
+                    EtiquetaHTML eti= new EtiquetaHTML(etiqueta, "");
+                    ErrorHTML nuevo = new ErrorHTML(error4, eti);
+                    
+                }
+            
+            
+            }
+//                else{
+//                    while(!posibleError.esVacio()){
+//                        etiquetaApertura.push(posibleError.pop());
+//                    }
 //                }
-
-            }
-
-            String h = getInverso(aux1);
-            if (h == "o") {
-
-                aux.push(aux2);
-                aux2 = aux1;
-
-
-            }
-
-
-            if (!h.equals(aux2)) {
-                aux.push(aux2);
-                aux2 = aux1;
-            }
-            //Preguntan si son inversos. Si son inversos se van los 2
-            //Si no son inversos en aux hacen push aux2 y aux2=aux1;
-
-
-
+//        }
+//    }
+    }
         }
-
+    return posibleError;
     }
 
     /**
@@ -371,25 +361,28 @@ public class SistemaHTML {
      */
     private String getInverso(String x) {
 
-        char t[] = x.toCharArray();
-
-        if (t[1] == '/') {
-
-            return "o";
-
-
-        } else {
+        
             String a = x.substring(1);
-            System.out.println(a);
+//            System.out.println(a);
             a = "</" + a;
             return a;
 
         }
-    }
+    
 
     public void combo() {
 
         this.cargarEtiquetas();
 
+    }
+    
+    public boolean casoEtiqueta (String dato){
+        
+        char etiqueta[]=dato.toCharArray();
+        if(etiqueta[1]=='/'){
+        return false;
+        }
+        
+        return true;
     }
 }
