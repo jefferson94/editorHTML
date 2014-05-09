@@ -1,6 +1,7 @@
-  package ufps.mundo;
+package ufps.mundo;
 
 import javax.print.DocFlavor;
+import org.xml.sax.ErrorHandler;
 import ufps.util.*;
 import ufps.mundo.TagGeneral;
 
@@ -153,7 +154,7 @@ public class SistemaHTML {
         for (Object dato : v) {
 
             String[] dato2 = dato.toString().split(";");
-            int pos = buscarDatoEnSecuencia(dato2[0],dato2[1],dato2[2]);
+            int pos = buscarDatoEnSecuencia(dato2[0], dato2[1], dato2[2]);
 
             if (pos != -1) {
 
@@ -162,18 +163,18 @@ public class SistemaHTML {
                     for (int i = 0; i < 6; i++) {
 
                         String msg = "<h" + (i + 1) + ">";
-                        String descripcion="Defines an HTML document";
+                        String descripcion = "Defines an HTML document";
                         this.tags.get(pos).getEtiquetas().enColar(new EtiquetaHTML(msg, descripcion));
                     }
-                   if(!dato2[1].equalsIgnoreCase("<h1> to <h6>")){
-                    this.tags.get(pos).getEtiquetas().enColar(new EtiquetaHTML(dato2[1], dato2[0]));
-                   }
-                }else{
+                    if (!dato2[1].equalsIgnoreCase("<h1> to <h6>")) {
+                        this.tags.get(pos).getEtiquetas().enColar(new EtiquetaHTML(dato2[1], dato2[0]));
+                    }
+                } else {
                     this.tags.get(pos).getEtiquetas().enColar(new EtiquetaHTML(dato2[1], dato2[2]));
-                } 
-             
+                }
+
             }
-               
+
         }
     }
 
@@ -182,24 +183,24 @@ public class SistemaHTML {
      * @param dato
      * @return
      */
-    public int buscarDatoEnSecuencia(String dato,String etiqueta,String descripcion) {
-        
-        Cola<EtiquetaHTML> c=new Cola<EtiquetaHTML>();
-       
-        
+    public int buscarDatoEnSecuencia(String dato, String etiqueta, String descripcion) {
+
+        Cola<EtiquetaHTML> c = new Cola<EtiquetaHTML>();
+
+
         for (int i = 0; i < this.tags.length(); i++) {
-            if(this.tags.get(i)!=null){
-                  if(this.tags.get(i).getTipo().equalsIgnoreCase(dato)){
-                      return i;
-                  }
-            }else{
-                
-                c.enColar(new EtiquetaHTML(etiqueta,descripcion));
-                this.tags.set(i,new TagGeneral(dato,c));
+            if (this.tags.get(i) != null) {
+                if (this.tags.get(i).getTipo().equalsIgnoreCase(dato)) {
+                    return i;
+                }
+            } else {
+
+                c.enColar(new EtiquetaHTML(etiqueta, descripcion));
+                this.tags.set(i, new TagGeneral(dato, c));
                 return -1;
             }
         }
-        
+
         return -1;
 
     }
@@ -306,49 +307,65 @@ public class SistemaHTML {
      * @param a Cola de String que contiene las etiquetas binarias o etiquetas
      * unarias.
      */
-    public Pila<String> isCorrect(Cola<String> a) {
+    public Pila<ErrorHTML> isCorrect(Cola<String> a) {
+        Pila<ErrorHTML> errores = new Pila<ErrorHTML>();
 
-     Pila<String> etiquetaApertura = new Pila<String>();
+        Pila<String> etiquetaApertura = new Pila<String>();
         Pila<String> posibleError = new Pila<String>();
         String dato;
         while (!a.esVacio()) {
-            dato=a.deColar();
-            if (casoEtiqueta(dato)){
+            dato = a.deColar();
+            if (casoEtiqueta(dato)) {
                 etiquetaApertura.push(dato);
-            
-            }
-        
-            else{
-                while(!etiquetaApertura.esVacio()){
+
+            } 
+            else {
+                while (!etiquetaApertura.esVacio()) {
+
 //                String dato2= etiquetaApertura.pop();
-                String dato3=etiquetaApertura.pop();
-                String inverso=getInverso(dato3);
-                if(!(inverso.equalsIgnoreCase(dato))){
-                    posibleError.push(dato3);
-                    
-            }
+                    String dato3 = etiquetaApertura.pop();
+                    String inverso = getInverso(dato3);
+                    if (!(inverso.equalsIgnoreCase(dato))) {
+                        posibleError.push(dato3);
+
+
+                    }
+                    break;
                 }
-                
-                if (etiquetaApertura.esVacio()&& !(posibleError.esVacio())){
-                    while(!posibleError.esVacio()){
-                    String etiqueta=posibleError.pop();
-                    EtiquetaHTML eti= new EtiquetaHTML(etiqueta, "");
-                    ErrorHTML nuevo = new ErrorHTML(error4, eti);
-                    
-                }
-            
-            
+
             }
-//                else{
-//                    while(!posibleError.esVacio()){
-//                        etiquetaApertura.push(posibleError.pop());
-//                    }
-//                }
-//        }
-//    }
-    }
+
+
         }
-    return posibleError;
+        if (!etiquetaApertura.esVacio() && !posibleError.esVacio()) {
+            while (!etiquetaApertura.esVacio() && !posibleError.esVacio()) {
+
+                dato = etiquetaApertura.pop();
+                String dato2 = posibleError.pop();
+                String inverso = getInverso(dato);
+                if (!(inverso.equalsIgnoreCase(dato2))) {
+                    posibleError.push(dato);
+                } 
+                else {
+                    
+                    break;
+                }
+            }
+        }
+        
+        else {
+
+            while (!posibleError.esVacio()) {
+                String etiqueta = posibleError.pop();
+                EtiquetaHTML eti = new EtiquetaHTML(etiqueta, "");
+                ErrorHTML nuevo = new ErrorHTML(error4, eti);
+                errores.push(nuevo);
+            }
+
+
+        }
+        return errores;
+
     }
 
     /**
@@ -361,28 +378,27 @@ public class SistemaHTML {
      */
     private String getInverso(String x) {
 
-        
-            String a = x.substring(1);
-//            System.out.println(a);
-            a = "</" + a;
-            return a;
 
-        }
-    
+        String a = x.substring(1);
+//            System.out.println(a);
+        a = "</" + a;
+        return a;
+
+    }
 
     public void combo() {
 
         this.cargarEtiquetas();
 
     }
-    
-    public boolean casoEtiqueta (String dato){
-        
-        char etiqueta[]=dato.toCharArray();
-        if(etiqueta[1]=='/'){
-        return false;
+
+    public boolean casoEtiqueta(String dato) {
+
+        char etiqueta[] = dato.toCharArray();
+        if (etiqueta[1]!= '/') {
+            return true;
         }
-        
-        return true;
+
+        return false;
     }
 }
