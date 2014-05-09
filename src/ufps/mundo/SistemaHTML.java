@@ -318,8 +318,7 @@ public class SistemaHTML {
             if (casoEtiqueta(dato)) {
                 etiquetaApertura.push(dato);
 
-            } 
-            else {
+            } else {
                 while (!etiquetaApertura.esVacio()) {
 
 //                String dato2= etiquetaApertura.pop();
@@ -345,33 +344,29 @@ public class SistemaHTML {
                 String inverso = getInverso(dato);
                 if (!(inverso.equalsIgnoreCase(dato2))) {
                     posibleError.push(dato);
-                } 
-                else {
-                    
+                } else {
+
                     break;
                 }
             }
-        }
-        
-        else {
+        } else {
             EtiquetaHTML eti;
             ErrorHTML nuevo;
             while (!posibleError.esVacio()) {
                 String etiqueta = posibleError.pop();
-                 eti = new EtiquetaHTML(etiqueta, "");
-               
-               if( casoEtiqueta(etiqueta)){
-               nuevo = new ErrorHTML(error1, eti);
-                
-                errores.push(nuevo);
-               }
-                else  {
-                   nuevo = new ErrorHTML(error2, eti);
-                   errores.push(nuevo);
-               }
-               
-                    
-                
+                eti = new EtiquetaHTML(etiqueta, "");
+
+                if (casoEtiqueta(etiqueta)) {
+                    nuevo = new ErrorHTML(error1, eti);
+
+                    errores.push(nuevo);
+                } else {
+                    nuevo = new ErrorHTML(error2, eti);
+                    errores.push(nuevo);
+                }
+
+
+
             }
 
         }
@@ -389,27 +384,28 @@ public class SistemaHTML {
      */
     private String getInverso(String x) {
 
-
         String a = x.substring(1);
-//            System.out.println(a);
         a = "</" + a;
         return a;
 
     }
 
-    public void combo() {
-
-        this.cargarEtiquetas();
-
-    }
-
+    /**
+     * Método que me indica si una etiqueta es de apertura o de cierre
+     *
+     * @param dato dato a revisar
+     * @return un valor booleano true si es de apertura, false si es de cierre.
+     */
     public boolean casoEtiqueta(String dato) {
 
         char etiqueta[] = dato.toCharArray();
-        if (etiqueta[1]!= '/') {
+        if (etiqueta[1] != '/') {
             return true;
         }
 
         return false;
     }
+    /**
+     * Fin de la clase
+     */
 }
